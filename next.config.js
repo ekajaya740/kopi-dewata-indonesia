@@ -1,4 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  // webpack5: true,
+  // webpack: (config) => {
+  //   config.resolve.fallback = { fs: false, path: false };
 
-module.exports = nextConfig
+  //   return config;
+  // },
+
+  experimental: {
+    serverActions: true,
+  },
+  images: {
+    domains: ['api.dicebear.com'],
+  },
+};
+
+module.exports = nextConfig;

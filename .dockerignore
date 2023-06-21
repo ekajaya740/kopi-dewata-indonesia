@@ -1,0 +1,6 @@
+.git
+next-env.d.ts
+node_modules
+.next
+docker-compose.yml
+Dockerfile

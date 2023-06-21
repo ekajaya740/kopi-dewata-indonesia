@@ -1,0 +1,50 @@
+
+
+version: '3'
+
+services:
+  db:
+   image: mysql:latest
+   restart: always
+   ports:
+     - "3306:3306"
+   environment:
+     MYSQL_ROOT_PASSWORD: kopiDewata123#
+     MYSQL_DATABASE: kopi_dewata_indonesia
+   volumes:
+     - db_data:/var/lib/mysql
+   networks:
+     - kdinet
+  
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - "8090:80"
+    networks:
+      - kdinet
+  
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   volumes:
+  #     - ./:/app
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - db
+  #     - phpmyadmin
+  #   networks:
+  #     - kdinet
+
+networks:
+  kdinet:
+
+volumes:
+  db_data:
+
+
