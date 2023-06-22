@@ -46,6 +46,8 @@ model produk {
   kategori       kategori    @relation(fields: [kategori_id], references: [id])
   keranjang      keranjang[]
   transaksi      transaksi[]
+
+  @@fulltext([nama]) 
 }
 
 model keranjang {

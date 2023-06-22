@@ -28,57 +28,6 @@ const Page = () => {
           {keranjang &&
             keranjang.map((item) => (
               <ProdukCard key={item.id} produk={item.produk} />
-              // <div key={item.id}>
-              //   <div className='card bg-neutral card-compact' key={item.id}>
-              //     <figure className='w-full '>
-              //       <Image
-              //         src={`/upload/produk/${item.produk.foto}`}
-              //         alt={''}
-              //         width={600}
-              //         height={300}
-              //         className='object-cover'
-              //       />
-              //     </figure>
-              //     <div className='card-body'>
-              //       <div className='flex flex-wrap'>
-              //         <div className='flex flex-wrap'>
-              //           <div className='badge'>
-              //             {capitalize
-              //               .words(item.produk.kategori.type)
-              //               .replace('_', ' ')}
-              //           </div>
-              //           <div className='badge'>
-              //             {capitalize
-              //               .words(item.produk.kategori.varietas)
-              //               .replace('_', ' ')}
-              //           </div>
-              //           <div className='badge'>
-              //             {capitalize
-              //               .words(item.produk.kategori.process)
-              //               .replace('_', ' ')}
-              //           </div>
-              //           <div className='badge'>
-              //             {capitalize
-              //               .words(item.produk.kategori.grind_size)
-              //               .replace('_', ' ')}
-              //           </div>
-              //           <div className='badge'>
-              //             {capitalize
-              //               .words(item.produk.kategori.roast_level)
-              //               .replace('_', ' ')}
-              //           </div>
-              //         </div>
-              //       </div>
-              //       <h1 className='text-xl'>{item.produk.nama}</h1>
-              //       <p className='card-title'>
-              //         {Intl.NumberFormat('ID-id', {
-              //           style: 'currency',
-              //           currency: 'IDR',
-              //         }).format(item.produk.harga)}
-              //       </p>
-              //     </div>
-              //   </div>
-              // </div>
             ))}
         </div>
       </div>

@@ -22,15 +22,11 @@ const Navbar = async () => {
         />
       </Link>
       <ul className='flex space-x-4'>
-        <li>
-          <NavbarMenu href={'/kategori'} nama={'Kategori'} match={'kategori'} />
-        </li>
+       
         <li>
           <NavbarMenu href={'/produk'} nama={'Produk'} match={'produk'} />
         </li>
-        <li>
-          <NavbarMenu href={'/tentang'} nama={'Tentang'} match={'tentang'} />
-        </li>
+        
       </ul>
       <ul className='flex space-x-4 items-center'>
         <li>
