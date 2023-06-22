@@ -19,5 +19,20 @@ export const getKeranjangByUser = async () => {
     },
   });
 
-  return keranjang;
+  const aggregate = await prisma.keranjang.aggregate({
+    where: {
+      user_id: djwt.data.id,
+    },
+    _sum: {
+      total: true,
+      qty: true,
+    },
+  });
+
+  return {
+    keranjang,
+    totalHarga: aggregate._sum.total! * aggregate._sum.qty!,
+    qty: aggregate._sum.qty!,
+    total: aggregate._sum.total!,
+  };
 };

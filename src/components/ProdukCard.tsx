@@ -20,7 +20,7 @@ const ProdukCard = (props: KategoriCardProps) => {
           alt={''}
           width={600}
           height={300}
-          className='object-cover'
+          className='object-cover w-1/2 md:w-full'
         />
       </figure>
       <div className='card-body'>

@@ -11,7 +11,7 @@ const RegisterForm = ({
   const { register, formState } = useForm();
   return (
     <form
-      className='flex justify-center items-center bg-base-300 p-6 flex-col rounded-lg space-y-4 max-w-xl w-full'
+      className='flex justify-center items-center md:bg-base-300 p-6 flex-col rounded-lg space-y-4 max-w-xl w-full'
       action={action}>
       <h1 className='font-bold text-3xl'>Register</h1>
       <div className='flex flex-col justify-center space-y-1 w-full'>

@@ -3,7 +3,7 @@
 import { createProduk } from '@/app/actions/createProduk';
 import { getAllCategory } from '@/app/actions/getAllCategory';
 import { getAllProduct } from '@/app/actions/getAllProduct';
-import { getProductById } from '@/app/actions/getProductById';
+import { getProdukById } from '@/app/actions/getProdukById';
 import { updateProduct } from '@/app/actions/updateProduk';
 import {
   GrindSize,
@@ -24,7 +24,7 @@ export interface ProdukFormProps {
 const ProdukForm = (props: ProdukFormProps) => {
   const produk = useQuery(['produk', props.id], async () => {
     if (props.id) {
-      return await getProductById(props.id);
+      return await getProdukById(props.id);
     }
   });
 

@@ -8,7 +8,7 @@ export interface SummaryCardProps {
 
 const SummaryCard = (props: SummaryCardProps) => {
   return (
-    <div className='card card-compact bg-white max-w-xs w-full'>
+    <div className='card card-compact bg-white w-full lg:max-w-xs'>
       <div className='card-body'>
         <div className='flex w-full items-center space-x-3'>
           <div className='flex-shrink-0 text-3xl text-primary'>

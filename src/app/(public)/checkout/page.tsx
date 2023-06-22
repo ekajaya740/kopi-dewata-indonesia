@@ -3,21 +3,18 @@
 import { checkoutKeranjang } from '@/app/actions/checkoutKeranjang';
 import { getKeranjangByUser } from '@/app/actions/getKeranjangByUser';
 import ProdukCard from '@/components/ProdukCard';
-import { produk } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
-import capitalize from 'capitalize';
-import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const router = useRouter();
 
   const { data: keranjang } = useQuery(['keranjang'], getKeranjangByUser);
 
-  const total = keranjang && keranjang.reduce((a, b) => a + b.total, 0);
-  const qtys = keranjang && keranjang.reduce((a, b) => a + b.qty, 0);
+  if (keranjang?.keranjang.length === 0) {
+    router.replace('/keranjang');
+  }
 
-  console.log(total);
   return (
     <>
       <div className='w-full container mx-auto h-screen space-y-4 pt-8'>
@@ -26,7 +23,7 @@ const Page = () => {
         </div>
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
           {keranjang &&
-            keranjang.map((item) => (
+            keranjang.keranjang.map((item) => (
               <ProdukCard key={item.id} produk={item.produk} />
             ))}
         </div>
@@ -38,13 +35,13 @@ const Page = () => {
             {Intl.NumberFormat('ID-id', {
               style: 'currency',
               currency: 'IDR',
-            }).format(total ? total : 0)}
+            }).format(keranjang?.totalHarga || 0)}
           </h3>
           <button
             className='btn btn-secondary'
             onClick={async () => {
-              if (qtys && total) {
-                await checkoutKeranjang(qtys, total);
+              if (keranjang?.total && keranjang?.qty) {
+                await checkoutKeranjang(keranjang?.qty, keranjang?.total);
                 router.replace('/');
                 router.refresh();
               }

@@ -16,9 +16,8 @@ export async function getSummaryTransactions() {
         gte: startOfMonth,
       },
     },
-    select: {
-      total: true,
-      qty: true,
+    include: {
+      produk: true,
     },
   });
 
@@ -33,5 +32,6 @@ export async function getSummaryTransactions() {
   return {
     todayTotal,
     todayQty,
+    transactions,
   };
 }
