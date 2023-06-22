@@ -25,20 +25,20 @@ services:
     networks:
       - kdinet
   
-  # web:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   volumes:
-  #     - ./:/app
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - db
-  #     - phpmyadmin
-  #   networks:
-  #     - kdinet
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - phpmyadmin
+    networks:
+      - kdinet
 
 networks:
   kdinet:
