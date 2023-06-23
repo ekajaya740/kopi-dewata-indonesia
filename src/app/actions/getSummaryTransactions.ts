@@ -1,4 +1,5 @@
 import prisma from '@/prisma';
+import { VerfikasiType } from '@prisma/client';
 
 export async function getSummaryTransactions() {
   const startOfMonth = new Date();
@@ -21,17 +22,41 @@ export async function getSummaryTransactions() {
     },
   });
 
-  const todayTotal = transactions.reduce((acc, curr) => {
-    return acc + curr.total;
-  }, 0);
+  const todayQty = await prisma.transaksi.aggregate({
+    where: {
+      tanggal_beli: {
+        lte: endOfMonth,
+        gte: startOfMonth,
+      },
+      verified: VerfikasiType.VERIFIED,
+    },
+    _sum: {
+      qty: true,
+    },
+  });
+  const todayTransaction = await prisma.transaksi.aggregate({
+    where: {
+      tanggal_beli: {
+        lte: endOfMonth,
+        gte: startOfMonth,
+      },
+    },
+    _sum: {
+      total: true,
+    },
+  });
 
-  const todayQty = transactions.reduce((acc, curr) => {
-    return acc + curr.qty;
-  }, 0);
+  // const todayTotal = transactions.reduce((acc, curr) => {
+  //   return acc + curr.total;
+  // }, 0);
+
+  // const todayQty = transactions.reduce((acc, curr) => {
+  //   return acc + curr.qty;
+  // }, 0);
 
   return {
-    todayTotal,
-    todayQty,
+    todayTotal: todayTransaction._sum.total,
+    todayQty: todayQty._sum.qty,
     transactions,
   };
 }

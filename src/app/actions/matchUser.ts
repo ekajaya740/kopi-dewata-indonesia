@@ -40,13 +40,19 @@ export async function matchUser(formData: FormData) {
     };
   }
 
-  const user = await prisma.user.findFirstOrThrow({
-    where: {
-      email,
-    },
-  });
+  const user = await prisma.user
+    .findFirstOrThrow({
+      where: {
+        email,
+      },
+    })
+    .catch((err) => {
+      return {
+        error: 'User tidak ditemukan',
+      };
+    });
 
-  if (!user) {
+  if (typeof user === 'object' && 'error' in user) {
     return {
       error: 'User tidak ditemukan',
     };

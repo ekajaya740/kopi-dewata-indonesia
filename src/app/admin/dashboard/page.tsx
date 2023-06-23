@@ -18,12 +18,14 @@ export default async function Page() {
         <div className='flex flex-wrap justify-between gap-4'>
           <SummaryCard
             title={'Transaksi Bulan Ini'}
-            value={Intl.NumberFormat('id-ID').format(transaksi.todayTotal)}
+            value={Intl.NumberFormat('id-ID').format(
+              Number(transaksi.todayTotal)
+            )}
             icon={<AiOutlineTransaction />}
           />
           <SummaryCard
             title={'Barang Terjual Bulan Ini'}
-            value={transaksi.todayQty.toString()}
+            value={transaksi.todayQty?.toString() || '0'}
             icon={<FaBoxOpen />}
           />
           <SummaryCard
@@ -33,7 +35,7 @@ export default async function Page() {
           />
         </div>
         <div className='py-8'>
-          <h2 className='font-bold text-2xl'>Daftar Transaksi Hari Ini</h2>
+          <h2 className='font-bold text-2xl'>Daftar Transaksi Bulan Ini</h2>
           <div className='w-full overflow-x-auto'>
             <table className='table'>
               <thead>
@@ -48,7 +50,7 @@ export default async function Page() {
               </thead>
               <tbody>
                 {transaksi.transactions.map((item) => (
-                  <tr>
+                  <tr key={item.id}>
                     <th>
                       <p className='font-bold'>{item.id}</p>
                     </th>

@@ -14,7 +14,7 @@ import capitalize from 'capitalize';
 const Sidebar = async () => {
   const user = await getUserById();
   return (
-    <aside className='menu lg:w-80 w-full h-screen bg-base-200 hidden lg:block'>
+    <aside className='menu lg:w-80 w-full h-screen min-h-screen bg-base-200 hidden lg:block left-0 sticky top-0'>
       <div className='w-full flex flex-col items-center space-y-8 px-4 py-8 h-full'>
         <div className='flex flex-col space-y-2 items-center'>
           <Image

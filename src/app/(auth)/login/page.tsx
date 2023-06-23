@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { matchUser } from '@/app/actions/matchUser';
-import { Suspense } from 'react';
+import { Suspense, useTransition } from 'react';
 import Loading from '@/app/admin/loading';
-const classNames = require('classnames');
+import classNames from 'classnames';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Page = async () => {
   return (
@@ -49,7 +50,9 @@ const Page = async () => {
           <Suspense fallback={<Loading />}>
             <div className='flex justify-center flex-col w-full'>
               <>
-                <button className='btn w-full btn-primary' type='submit'>
+                <button
+                  className={classNames('btn w-full btn-primary')}
+                  type='submit'>
                   Login
                 </button>
                 <Link className='btn btn-link' href={'/register'}>

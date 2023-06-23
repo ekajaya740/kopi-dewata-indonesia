@@ -48,7 +48,7 @@ export default function Page({
             </h2>
             <p>Stok: {produk?.stok}</p>
             {keranjang && keranjang.produk_id === produk?.id ? (
-              <div className='flex'>
+              <div className='flex flex-wrap gap-1'>
                 <input
                   type='number'
                   name='qty'

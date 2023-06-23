@@ -13,7 +13,10 @@ import cn from 'classnames';
 export default function Page() {
   const { data: keranjang, isLoading } = useQuery(
     ['keranjang'],
-    getKeranjangByUser
+    getKeranjangByUser,
+    {
+      refetchInterval: 100,
+    }
   );
 
   const router = useRouter();
@@ -38,7 +41,7 @@ export default function Page() {
           <p>Keranjang kosong</p>
         ) : (
           keranjang &&
-          keranjang.keranjang.map((item) => (
+          keranjang.keranjang.map((item: any) => (
             <ProdukCard
               key={item.id}
               produk={item.produk}

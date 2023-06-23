@@ -9,7 +9,10 @@ import Loading from '../loading';
 const Page = () => {
   const { data: transaksi, isLoading } = useQuery(
     ['transaksi', 'pending'],
-    getAllPendingTransaksi
+    getAllPendingTransaksi,
+    {
+      refetchInterval: 100,
+    }
   );
 
   return (

@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -46,8 +45,6 @@ model produk {
   kategori       kategori    @relation(fields: [kategori_id], references: [id])
   keranjang      keranjang[]
   transaksi      transaksi[]
-
-  @@fulltext([nama]) 
 }
 
 model keranjang {

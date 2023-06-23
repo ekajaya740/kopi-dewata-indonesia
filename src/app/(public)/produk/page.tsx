@@ -1,21 +1,11 @@
 'use client';
 
-// import { addToKeranjang } from '@/app/actions/addToKeranjang';
-import { decodeJWT } from '@/app/actions/decodeJWT';
 import { getAllProduct } from '@/app/actions/getAllProduct';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 import capitalize from 'capitalize';
-import prisma from '@/prisma';
 import { addToKeranjang } from '@/app/actions/addToKeranjang';
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import ProdukCard from '@/components/ProdukCard';
-import { getAllCategory } from '@/app/actions/getAllCategory';
 import {
   GrindSize,
   KategoriType,
@@ -24,24 +14,15 @@ import {
   Varietas,
 } from '@prisma/client';
 import { searchFilter } from '@/app/actions/searchFilter';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import Loading from '@/app/admin/loading';
 
 export default function Page() {
-  const [enabled, setEnabled] = useState(true);
-  const {
-    data: produk,
-    isLoading,
-    isError,
-    error,
-  } = useQuery(['products'], getAllProduct, {
-    refetchInterval: 500,
-    enabled: enabled,
+  const { data: produk, isLoading } = useQuery(['products'], getAllProduct, {
+    refetchInterval: 100,
   });
 
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const mutate = useMutation(searchFilter, {
     onSuccess: (data) => {

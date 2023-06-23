@@ -1,10 +1,11 @@
 FROM node:latest
 WORKDIR /app
-COPY package.json ./
-ENV DATABASE_URL "mysql://root:kopiDewata123#@localhost:3306/kopi_dewata_indonesia"
-RUN npm install -g pnpm
-RUN pnpm install
+# ENV DATABASE_URL "mysql://root:kopiDewata123%23@db:3306/kopi_dewata_indonesia"
+COPY package.json .
+RUN npm install
 COPY . .
-RUN pnpm run build
+RUN npx prisma generate
+RUN npx prisma migrate deploy
+RUN npm run build
+EXPOSE 3000
 CMD [ "npm", "run", "start" ]
-

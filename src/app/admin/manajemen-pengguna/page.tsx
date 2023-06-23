@@ -7,11 +7,15 @@ import RegisterForm from '@/components/RegisterForm';
 import { Role } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../loading';
+import { deleteUser } from '@/app/actions/deleteUser';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const { data: user, isLoading } = useQuery(['user'], getAllUser, {
     refetchInterval: 500,
   });
+
+  const router = useRouter();
   return (
     <div className='w-full h-screen'>
       <h1 className='text-4xl font-bold pb-8'>Manajemen Pengguna</h1>
@@ -37,7 +41,7 @@ const Page = () => {
                 </thead>
                 <tbody>
                   {user.map((item) => (
-                    <tr>
+                    <tr key={item.id}>
                       <td>{item.id}</td>
                       <td>{item.nama}</td>
                       <td>{item.email}</td>
@@ -58,14 +62,21 @@ const Page = () => {
                             defaultValue={
                               item.role === Role.ADMIN ? Role.ADMIN : Role.USER
                             }>
-                            {Object.values(Role).map((role) => (
-                              <option value={role}>{role}</option>
+                            {Object.values(Role).map((role, index) => (
+                              <option value={role} key={index}>
+                                {role}
+                              </option>
                             ))}
                           </select>
                         }
                       </td>
                       <td>
-                        <button className='btn btn-error' onClick={() => {}}>
+                        <button
+                          className='btn btn-error'
+                          onClick={async () => {
+                            await deleteUser(item.id);
+                            router.refresh();
+                          }}>
                           Hapus
                         </button>
                       </td>
