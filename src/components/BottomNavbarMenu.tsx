@@ -21,10 +21,7 @@ const BottomNavbarMenu = (props: MenuProps) => {
         className={classnames(
           'flex flex-col justify-center p-2 items-center rounded-xl text-white',
           {
-            'active bg-white text-black rounded-full': pathname.includes(
-              props.href
-            ),
-            // 'border-2 border-base-300': !pathname.includes(props.href),
+            'active bg-secondary rounded-full': pathname.includes(props.href),
           }
         )}>
         <div className='text-2xl'>{props.icon}</div>

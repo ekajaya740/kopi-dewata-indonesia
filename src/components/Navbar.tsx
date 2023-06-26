@@ -25,18 +25,20 @@ const Navbar = async () => {
 
   return djwt.data.role === Role.ADMIN ? (
     <nav className='flex justify-center px-8 py-4 bg-primary items-center z-[9999]'>
-      <Image
-        src={'/logo.png'}
-        alt={'Logo Kopi Dewata Indonesia'}
-        width={64}
-        height={64}
-        className='rounded-full'
-      />
+      <Link href={'/'}>
+        <Image
+          src={'/logo.png'}
+          alt={'Logo Kopi Dewata Indonesia'}
+          width={64}
+          height={64}
+          className='rounded-full'
+        />
+      </Link>
     </nav>
   ) : (
     <nav className='flex justify-between px-8 py-4 bg-primary items-center z-[9999]'>
       <>
-        <Link href={'/produk'}>
+        <Link href={'/'}>
           <Image
             src={'/logo.png'}
             alt={'Logo Kopi Dewata Indonesia'}

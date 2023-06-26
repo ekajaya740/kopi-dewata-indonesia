@@ -14,6 +14,7 @@ import {
   produk,
 } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
+import SubmitButton from './SubmitButton';
 
 const capitalize = require('capitalize');
 
@@ -28,10 +29,6 @@ const ProdukForm = (props: ProdukFormProps) => {
     }
   });
 
-  // const produk = await getProductById(props.id);
-
-  // const kategori = useQuery(['kategori'], getAllCategory);
-
   return (
     <form
       action={async (formData) => {
@@ -45,34 +42,43 @@ const ProdukForm = (props: ProdukFormProps) => {
       <input
         type='text'
         name='nama'
-        className='w-full input'
+        required
+        className='w-full input input-bordered'
         placeholder='Nama Barang'
         defaultValue={produk.data?.nama}
       />
       <input
         type='number'
         name='harga'
-        className='w-full input'
+        required
+        className='w-full input input-bordered'
         placeholder='Harga'
         defaultValue={produk.data?.harga}
       />
       <input
         type='number'
         name='stok'
-        className='w-full input'
+        required
+        className='w-full input input-bordered'
         placeholder='Stok'
         defaultValue={produk.data?.stok}
       />
       <textarea
+        required
         name='deskripsi'
-        className='w-full textarea'
+        className='w-full textarea textarea-bordered'
         placeholder='Deskripsi'
         defaultValue={produk.data?.deskripsi}></textarea>
-      <input type='file' name='file' className='file-input w-full' />
+      <input
+        required={props.id === undefined}
+        type='file'
+        name='file'
+        className='file-input w-full'
+      />
       <select
         className='select select-bordered w-full'
         name='type'
-        defaultValue={produk.data?.kategori.type}>
+        defaultValue={produk.data?.kategori[0].type}>
         <option disabled selected={produk ? true : false}>
           Pilih Tipe Produk
         </option>
@@ -81,7 +87,7 @@ const ProdukForm = (props: ProdukFormProps) => {
             value={item}
             key={index}
             selected={
-              produk && produk.data?.kategori.type.toString() === item
+              produk && produk.data?.kategori[0].type.toString() === item
                 ? true
                 : false
             }>
@@ -92,7 +98,7 @@ const ProdukForm = (props: ProdukFormProps) => {
       <select
         className='select select-bordered w-full'
         name='varietas'
-        defaultValue={produk.data?.kategori.varietas}>
+        defaultValue={produk.data?.kategori[0].varietas}>
         <option disabled selected={produk ? true : false}>
           Pilih Varietas
         </option>
@@ -101,7 +107,7 @@ const ProdukForm = (props: ProdukFormProps) => {
             value={item}
             key={index}
             selected={
-              produk && produk.data?.kategori.varietas.toString() === item
+              produk && produk.data?.kategori[0].varietas.toString() === item
                 ? true
                 : false
             }>
@@ -112,7 +118,7 @@ const ProdukForm = (props: ProdukFormProps) => {
       <select
         className='select select-bordered w-full'
         name='process'
-        defaultValue={produk.data?.kategori.process}>
+        defaultValue={produk.data?.kategori[0].process}>
         <option disabled selected={produk ? true : false}>
           Pilih Proses Biji Kopi
         </option>
@@ -121,7 +127,7 @@ const ProdukForm = (props: ProdukFormProps) => {
             value={item}
             key={index}
             selected={
-              produk && produk.data?.kategori.process.toString() === item
+              produk && produk.data?.kategori[0].process.toString() === item
                 ? true
                 : false
             }>
@@ -132,7 +138,7 @@ const ProdukForm = (props: ProdukFormProps) => {
       <select
         className='select select-bordered w-full'
         name='roast_level'
-        defaultValue={produk.data?.kategori.roast_level}>
+        defaultValue={produk.data?.kategori[0].roast_level}>
         <option disabled selected={produk ? true : false}>
           Pilih Roast Level
         </option>
@@ -141,7 +147,7 @@ const ProdukForm = (props: ProdukFormProps) => {
             value={item}
             key={index}
             selected={
-              produk && produk.data?.kategori.roast_level === item
+              produk && produk.data?.kategori[0].roast_level === item
                 ? true
                 : false
             }>
@@ -152,7 +158,7 @@ const ProdukForm = (props: ProdukFormProps) => {
       <select
         className='select select-bordered w-full'
         name='grind_size'
-        defaultValue={produk.data?.kategori_id}>
+        defaultValue={produk.data?.kategori[0].grind_size}>
         <option disabled selected={produk ? true : false}>
           Pilih Grind Size
         </option>
@@ -161,13 +167,15 @@ const ProdukForm = (props: ProdukFormProps) => {
             value={item}
             key={index}
             selected={
-              produk && produk.data?.kategori.grind_size === item ? true : false
+              produk && produk.data?.kategori[0].grind_size === item
+                ? true
+                : false
             }>
             {Object.values(GrindSize)[index]}
           </option>
         ))}
       </select>
-      <button className='btn btn-primary w-full'>Simpan</button>
+      <SubmitButton name='Simpan' />
     </form>
   );
 };

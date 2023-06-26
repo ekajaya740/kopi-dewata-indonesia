@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar';
 import '../globals.css';
 import { Inter } from 'next/font/google';
-import QueryClientPage from '@/components/QueryClientPage';
 
 // TODO: change font
 const inter = Inter({ subsets: ['latin'] });
@@ -22,3 +21,12 @@ export default async function RootLayout({
     </html>
   );
 }
+
+// ('use client');
+
+// import QueryClientPage from '@/components/QueryClientPage';
+
+// export default function Layout({ children }: { children: React.ReactNode }) {
+//   // return <div>{children}</div>;
+//   return <QueryClientPage>{children}</QueryClientPage>;
+// }

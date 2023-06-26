@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { deleteProduct } from '@/app/actions/deleteProduct';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../loading';
+import { BsPenFill, BsTrash2Fill } from 'react-icons/bs';
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -24,6 +25,8 @@ const Page = () => {
     },
   });
 
+  console.log(barang);
+
   return (
     <>
       <h1 className='font-bold text-4xl pb-8'>Manajemen Barang</h1>
@@ -36,7 +39,7 @@ const Page = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className='w-full overflow-x-auto'>
+        <div className='overflow-x-auto'>
           <table className='table'>
             <thead>
               <tr>
@@ -68,27 +71,27 @@ const Page = () => {
                     <td>{item.id}</td>
                     <td>
                       <p className='break-normal truncate'>
-                        {item.kategori.type}
+                        {item.kategori[0].type}
                       </p>
                     </td>
                     <td>
                       <p className='break-normal truncate'>
-                        {item.kategori.varietas}
+                        {item.kategori[0].varietas}
                       </p>
                     </td>
                     <td>
                       <p className='break-normal truncate'>
-                        {item.kategori.grind_size}
+                        {item.kategori[0].grind_size}
                       </p>
                     </td>
                     <td>
                       <p className='break-normal truncate'>
-                        {item.kategori.process}
+                        {item.kategori[0].process}
                       </p>
                     </td>
                     <td>
                       <p className='break-normal truncate'>
-                        {item.kategori.roast_level}
+                        {item.kategori[0].roast_level}
                       </p>
                     </td>
                     <td>{item.stok}</td>
@@ -103,14 +106,14 @@ const Page = () => {
                       <Link
                         href={`/admin/barang/${item.id}/edit`}
                         className='btn btn-warning'>
-                        Edit
+                        <BsPenFill />
                       </Link>
                       <button
                         className='btn btn-error'
                         onClick={async () => {
                           await mutation.mutateAsync(item.id);
                         }}>
-                        Hapus
+                        <BsTrash2Fill className='text-white' />
                       </button>
                     </td>
                   </tr>

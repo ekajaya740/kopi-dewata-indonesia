@@ -97,7 +97,23 @@ export const updateProduct = async (formData: FormData, id: number) => {
       harga: harga,
       stok: stok,
       foto: newFilename,
-      kategori_id: kategori?.id,
+      deskripsi: deskripsi,
+      kategori: {
+        connectOrCreate: {
+          where: {
+            id: kategori?.id,
+          },
+          create: {
+            type: Object.values(KategoriType).find((t) => t === type),
+            varietas: Object.values(Varietas).find((t) => t === varietas),
+            process: Object.values(Process).find((t) => t === process),
+            roast_level: Object.values(RoastLevel).find(
+              (t) => t === roastLevel
+            ),
+            grind_size: Object.values(GrindSize).find((t) => t === grindSize),
+          },
+        },
+      },
     },
   });
 

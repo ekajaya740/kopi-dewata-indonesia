@@ -14,7 +14,7 @@ model kategori {
   process     Process      @default(NATURAL)
   roast_level RoastLevel   @default(NONE)
   grind_size  GrindSize    @default(NONE)
-  produk      produk?
+  produk      produk[]
 }
 
 model user {
@@ -28,8 +28,8 @@ model user {
   tanggal_dibuat DateTime    @default(now())
   tanggal_diubah DateTime    @default(now())
   keranjang_id   Int?
-  transaksi      transaksi[]
   keranjang      keranjang[]
+  transaksi      transaksi[]
 }
 
 model produk {
@@ -38,11 +38,10 @@ model produk {
   harga          Int
   stok           Int
   deskripsi      String
-  kategori_id    Int         @unique
+  kategori       kategori[]
   tanggal_dibuat DateTime    @default(now())
   tanggal_diubah DateTime    @default(now())
   foto           String
-  kategori       kategori    @relation(fields: [kategori_id], references: [id])
   keranjang      keranjang[]
   transaksi      transaksi[]
 }
@@ -57,6 +56,9 @@ model keranjang {
   total          Int      @default(0)
   produk         produk   @relation(fields: [produk_id], references: [id])
   user           user     @relation(fields: [user_id], references: [id])
+
+  @@index([produk_id], map: "keranjang_produk_id_fkey")
+  @@index([user_id], map: "keranjang_user_id_fkey")
 }
 
 model transaksi {
@@ -68,8 +70,8 @@ model transaksi {
   total              Int
   qty                Int
   verified           VerfikasiType @default(UNVERIFIED)
-  user               user          @relation(fields: [user_id], references: [id])
   produk             produk        @relation(fields: [produk_id], references: [id])
+  user               user          @relation(fields: [user_id], references: [id])
 
   @@index([user_id], map: "transaksi_user_id_fkey")
   @@index([produk_id], map: "transaksi_produk_id_fkey")

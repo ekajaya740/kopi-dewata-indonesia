@@ -6,11 +6,13 @@ import { getProdukById } from '@/app/actions/getProdukById';
 import getUserKeranjang from '@/app/actions/getUserKeranjang';
 import Loading from '@/app/admin/loading';
 import { useQuery } from '@tanstack/react-query';
+import capitalize from 'capitalize';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { GiShoppingCart } from 'react-icons/gi';
 import { GrTransaction } from 'react-icons/gr';
+import cn from 'classnames';
 
 export default function Page({
   params,
@@ -40,6 +42,45 @@ export default function Page({
           />
           <div className='col-span-2 flex space-y-4 flex-col'>
             <h1 className='text-4xl font-bold'>{produk?.nama}</h1>
+            {produk && produk !== null ? (
+              <>
+                <div className='flex flex-wrap gap-1'>
+                  <div className='badge'>
+                    {capitalize
+                      .words(produk!.kategori[0].type)
+                      .replace('_', ' ')}
+                  </div>
+                  <div className='badge'>
+                    {capitalize
+                      .words(produk!.kategori[0].varietas)
+                      .replace('_', ' ')}
+                  </div>
+                  <div className='badge'>
+                    {capitalize
+                      .words(produk!.kategori[0].process)
+                      .replace('_', ' ')}
+                  </div>
+                  <div
+                    className={cn('badge', {
+                      hidden: produk!.kategori[0].grind_size === 'NONE',
+                    })}>
+                    {capitalize
+                      .words(produk!.kategori[0].grind_size)
+                      .replace('_', ' ')}
+                  </div>
+                  <div
+                    className={cn('badge', {
+                      hidden: produk!.kategori[0].roast_level === 'NONE',
+                    })}>
+                    {capitalize
+                      .words(produk!.kategori[0].roast_level)
+                      .replace('_', ' ')}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
             <h2 className='text-xl font-medium'>
               {Intl.NumberFormat('ID-id', {
                 style: 'currency',
@@ -47,46 +88,53 @@ export default function Page({
               }).format(produk?.harga ?? 0)}
             </h2>
             <p>Stok: {produk?.stok}</p>
-            {keranjang && keranjang.produk_id === produk?.id ? (
-              <div className='flex flex-wrap gap-1'>
-                <input
-                  type='number'
-                  name='qty'
-                  id='qty'
-                  className='input max-w-xs'
-                  defaultValue={
-                    keranjang && keranjang !== null ? keranjang.qty : 0
-                  }
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                    if (e.target.value === '') {
-                      return;
-                    }
-                    if (Number(e.target.value) <= 0) {
-                      return;
-                    }
-
-                    if (
-                      Number(e.target.value) < ((produk && produk?.stok) ?? 0)
-                    ) {
-                      fetch('/api/add-to-keranjang', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                          produk_id: Number(id),
-                          qty: Number(e.target.value),
-                        }),
-                      });
-                    }
-                  }}
-                />
-                <Link className='btn btn-primary' href={'/keranjang'}>
-                  <GiShoppingCart className='text-3xl' />
-                </Link>
-              </div>
+            {produk?.stok === 0 ? (
+              <p>Produk habis</p>
             ) : (
-              <button className='btn btn-primary max-w-xs'>
-                Masukkan ke Keranjang
-              </button>
+              <>
+                {keranjang && keranjang.produk_id === produk?.id ? (
+                  <div className='flex flex-wrap gap-1'>
+                    <input
+                      type='number'
+                      name='qty'
+                      id='qty'
+                      className='input max-w-xs'
+                      defaultValue={
+                        keranjang && keranjang !== null ? keranjang.qty : 0
+                      }
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                        if (e.target.value === '') {
+                          return;
+                        }
+                        if (Number(e.target.value) <= 0) {
+                          return;
+                        }
+
+                        if (
+                          Number(e.target.value) <
+                          ((produk && produk?.stok) ?? 0)
+                        ) {
+                          fetch('/api/add-to-keranjang', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                              produk_id: Number(id),
+                              qty: Number(e.target.value),
+                            }),
+                          });
+                        }
+                      }}
+                    />
+                    <Link className='btn btn-primary' href={'/keranjang'}>
+                      <GiShoppingCart className='text-3xl' />
+                    </Link>
+                  </div>
+                ) : (
+                  <button className='btn btn-primary max-w-xs'>
+                    Masukkan ke Keranjang
+                  </button>
+                )}
+              </>
             )}
             <div className='flex w-full flex-col space-y-1'>
               <div>

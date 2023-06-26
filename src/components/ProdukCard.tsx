@@ -7,54 +7,52 @@ import Link from 'next/link';
 
 export interface KategoriCardProps {
   produk: produk & {
-    kategori: kategori;
+    kategori: kategori[];
   };
   actions?: React.ReactNode;
 }
 const ProdukCard = (props: KategoriCardProps) => {
   return (
     <div className='card bg-neutral card-compact hover:bg-primary-100'>
-      <figure className='w-full '>
+      <figure className='w-full h-80'>
         <Image
           src={`/upload/produk/${props.produk.foto}`}
           alt={''}
-          width={600}
-          height={300}
-          className='object-cover w-1/2 md:w-full'
+          width={300}
+          height={200}
+          className='object-cover w-full h-full'
         />
       </figure>
       <div className='card-body'>
-        <div className='flex flex-wrap'>
-          <div className='flex flex-wrap gap-1'>
-            <div className='badge'>
-              {capitalize.words(props.produk.kategori.type).replace('_', ' ')}
-            </div>
-            <div className='badge'>
-              {capitalize
-                .words(props.produk.kategori.varietas)
-                .replace('_', ' ')}
-            </div>
-            <div className='badge'>
-              {capitalize
-                .words(props.produk.kategori.process)
-                .replace('_', ' ')}
-            </div>
-            <div
-              className={cn('badge', {
-                hidden: props.produk.kategori.grind_size === 'NONE',
-              })}>
-              {capitalize
-                .words(props.produk.kategori.grind_size)
-                .replace('_', ' ')}
-            </div>
-            <div
-              className={cn('badge', {
-                hidden: props.produk.kategori.roast_level === 'NONE',
-              })}>
-              {capitalize
-                .words(props.produk.kategori.roast_level)
-                .replace('_', ' ')}
-            </div>
+        <div className='flex flex-wrap gap-1'>
+          <div className='badge'>
+            {capitalize.words(props.produk.kategori[0].type).replace('_', ' ')}
+          </div>
+          <div className='badge'>
+            {capitalize
+              .words(props.produk.kategori[0].varietas)
+              .replace('_', ' ')}
+          </div>
+          <div className='badge'>
+            {capitalize
+              .words(props.produk.kategori[0].process)
+              .replace('_', ' ')}
+          </div>
+          <div
+            className={cn('badge', {
+              hidden: props.produk.kategori[0].grind_size === 'NONE',
+            })}>
+            {capitalize
+              .words(props.produk.kategori[0].grind_size)
+              .replace('_', ' ')}
+          </div>
+          <div
+            className={cn('badge', {
+              hidden: props.produk.kategori[0].roast_level === 'NONE',
+            })}>
+            {capitalize
+              .words(props.produk.kategori[0].roast_level)
+              .replace('_', ' ')}
           </div>
         </div>
         <Link href={`/produk/${props.produk.id}`}>

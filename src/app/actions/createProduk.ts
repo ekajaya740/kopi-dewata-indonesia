@@ -40,27 +40,21 @@ export async function createProduk(formData: FormData) {
 
   const filename = await uploadImage(formData.get('file') as File);
 
-  const kategori = await prisma.kategori.findFirst({
-    where: {
-      type: Object.values(KategoriType).find((t) => t === type),
-      varietas: Object.values(Varietas).find((t) => t === varietas),
-      process: Object.values(Process).find((t) => t === process),
-      roast_level: Object.values(RoastLevel).find((t) => t === roastLevel),
-      grind_size: Object.values(GrindSize).find((t) => t === grindSize),
-    },
-  });
-
-  if (kategori === null) {
-    await prisma.kategori.create({
-      data: {
-        type: Object.values(KategoriType).find((t) => t === type),
-        varietas: Object.values(Varietas).find((t) => t === varietas),
-        process: Object.values(Process).find((t) => t === process),
-        roast_level: Object.values(RoastLevel).find((t) => t === roastLevel),
-        grind_size: Object.values(GrindSize).find((t) => t === grindSize),
+  const kategoriId = await prisma.kategori
+    .findFirst({
+      where: {
+        type: type as KategoriType,
+        varietas: varietas as Varietas,
+        process: process as Process,
+        roast_level: roastLevel as RoastLevel,
+        grind_size: grindSize as GrindSize,
       },
-    }); // TODO: Change with Error Handling
-  }
+      select: {
+        id: true,
+      },
+    })
+    .then((kategori) => kategori?.id)
+    .catch(() => null);
 
   await prisma.produk.create({
     data: {
@@ -69,8 +63,17 @@ export async function createProduk(formData: FormData) {
       stok,
       foto: filename,
       kategori: {
-        connect: {
-          id: kategori?.id,
+        connectOrCreate: {
+          where: {
+            id: kategoriId || 0,
+          },
+          create: {
+            type: type as KategoriType,
+            varietas: varietas as Varietas,
+            process: process as Process,
+            roast_level: roastLevel as RoastLevel,
+            grind_size: grindSize as GrindSize,
+          },
         },
       },
       deskripsi,

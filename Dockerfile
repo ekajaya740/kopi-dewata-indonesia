@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:18.16
 WORKDIR /app
 # ENV DATABASE_URL "mysql://root:kopiDewata123%23@db:3306/kopi_dewata_indonesia"
 COPY package.json .

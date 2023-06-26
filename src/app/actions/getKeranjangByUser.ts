@@ -31,7 +31,6 @@ export const getKeranjangByUser = async () => {
 
   return {
     keranjang,
-    totalHarga: aggregate._sum.total! * aggregate._sum.qty!,
     qty: aggregate._sum.qty!,
     total: aggregate._sum.total!,
   };

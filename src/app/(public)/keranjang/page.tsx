@@ -15,7 +15,7 @@ export default function Page() {
     ['keranjang'],
     getKeranjangByUser,
     {
-      refetchInterval: 100,
+      refetchInterval: 10,
     }
   );
 
@@ -60,7 +60,7 @@ export default function Page() {
                         return;
                       }
 
-                      if (Number(e.target.value) < item.produk.stok) {
+                      if (Number(e.target.value) <= item.produk.stok) {
                         fetch('/api/add-to-keranjang', {
                           method: 'POST',
                           body: JSON.stringify({

@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { matchUser } from '@/app/actions/matchUser';
-import { Suspense, useTransition } from 'react';
+import { Suspense } from 'react';
 import Loading from '@/app/admin/loading';
 import classNames from 'classnames';
 import 'react-toastify/dist/ReactToastify.css';
+import SubmitButton from '@/components/SubmitButton';
+import MultiSubmitButtons from '@/components/MultiSubmitButtons';
 
 const Page = async () => {
   return (
@@ -22,45 +24,34 @@ const Page = async () => {
             className='rounded-full'
           />
           <div className='flex flex-col justify-center space-y-1 w-full'>
-            <div className='form-control w-full'>
-              <input
-                id='email'
-                name='email'
-                placeholder='Email'
-                className={classNames('input', {})}
-                type='email'
-              />
-              <label className='label'>
-                <span className={classNames(`label-text-alt`, {})}></span>
-              </label>
-            </div>
-            <div className='form-control w-full'>
-              <input
-                id='password'
-                name='password'
-                placeholder='Password'
-                className={classNames(`input`, {})}
-                type='password'
-              />
-              <label className='label'>
-                <span className={classNames(`label-text-alt`, {})}></span>
-              </label>
-            </div>
+            <input
+              id='email'
+              name='email'
+              placeholder='Email'
+              className={classNames('input input-bordered', {})}
+              type='email'
+            />
+            <input
+              id='password'
+              name='password'
+              placeholder='Password'
+              className={classNames(`input input-bordered`, {})}
+              type='password'
+            />
           </div>
-          <Suspense fallback={<Loading />}>
-            <div className='flex justify-center flex-col w-full'>
-              <>
-                <button
-                  className={classNames('btn w-full btn-primary')}
-                  type='submit'>
-                  Login
-                </button>
-                <Link className='btn btn-link' href={'/register'}>
-                  Register
-                </Link>
-              </>
-            </div>
-          </Suspense>
+          <div className='flex justify-center flex-col w-full'>
+            <>
+              <MultiSubmitButtons
+                btn-submit={{
+                  name: 'Login',
+                }}
+                btn-link={{
+                  name: 'Register',
+                  href: '/register',
+                }}
+              />
+            </>
+          </div>
         </form>
       </div>
     </>

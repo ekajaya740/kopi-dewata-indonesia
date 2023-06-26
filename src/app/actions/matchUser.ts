@@ -2,6 +2,7 @@
 
 import prisma from '@/prisma';
 import { Role, user } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -23,8 +24,6 @@ async function generateToken(user: user) {
 }
 
 export async function matchUser(formData: FormData) {
-  'use server';
-
   const email = formData.get('email')?.valueOf();
   const password = formData.get('password')?.valueOf();
 
@@ -40,17 +39,11 @@ export async function matchUser(formData: FormData) {
     };
   }
 
-  const user = await prisma.user
-    .findFirstOrThrow({
-      where: {
-        email,
-      },
-    })
-    .catch((err) => {
-      return {
-        error: 'User tidak ditemukan',
-      };
-    });
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      email: email,
+    },
+  });
 
   if (typeof user === 'object' && 'error' in user) {
     return {

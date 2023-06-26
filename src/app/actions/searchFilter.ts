@@ -25,20 +25,12 @@ export async function searchFilter({
   const search = await prisma.produk.findMany({
     where: {
       kategori: {
-        type: {
-          equals: type,
-        },
-        varietas: {
-          equals: varietas,
-        },
-        process: {
-          equals: process,
-        },
-        roast_level: {
-          equals: roastLevel,
-        },
-        grind_size: {
-          equals: grindSize,
+        some: {
+          type: type,
+          varietas: varietas,
+          process: process,
+          roast_level: roastLevel,
+          grind_size: grindSize,
         },
       },
     },
