@@ -5,8 +5,6 @@ import RegisterForm from '@/components/RegisterForm';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
-// TODO: Error handling
-
 const Page = async () => {
   return (
     <Suspense fallback={<Loading />}>
