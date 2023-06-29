@@ -55,7 +55,7 @@ export default async function Page() {
                       <p className='font-bold'>{item.id}</p>
                     </th>
                     <th>
-                      <p className='font-bold'>{item.produk.nama}</p>
+                      <p className='font-bold'>{item.produk?.nama}</p>
                     </th>
                     <th>
                       <p className='font-bold'>{item.qty}</p>

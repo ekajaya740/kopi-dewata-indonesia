@@ -25,7 +25,7 @@ export default async function Page() {
               transaksi.map((item) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
-                  <td>{item.produk.nama}</td>
+                  <td>{item.produk?.nama}</td>
                   <td>{item.qty}</td>
                   <td>
                     {Intl.NumberFormat('ID-id', {
