@@ -51,10 +51,10 @@ model keranjang {
   user_id        Int
   tanggal_dibuat DateTime @default(now())
   tanggal_diubah DateTime @default(now())
-  produk_id      Int
+  produk_id      Int?
   qty            Int
   total          Int      @default(0)
-  produk         produk   @relation(fields: [produk_id], references: [id])
+  produk         produk?  @relation(fields: [produk_id], references: [id])
   user           user     @relation(fields: [user_id], references: [id])
 
   @@index([produk_id], map: "keranjang_produk_id_fkey")
@@ -64,13 +64,13 @@ model keranjang {
 model transaksi {
   id                 Int           @id @default(autoincrement())
   user_id            Int
-  produk_id          Int
+  produk_id          Int?
   tanggal_beli       DateTime      @default(now())
   tanggal_verifikasi DateTime?
   total              Int
   qty                Int
   verified           VerfikasiType @default(UNVERIFIED)
-  produk             produk        @relation(fields: [produk_id], references: [id])
+  produk             produk?       @relation(fields: [produk_id], references: [id])
   user               user          @relation(fields: [user_id], references: [id])
 
   @@index([user_id], map: "transaksi_user_id_fkey")

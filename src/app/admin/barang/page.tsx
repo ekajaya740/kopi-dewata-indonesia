@@ -8,6 +8,8 @@ import { deleteProduct } from '@/app/actions/deleteProduct';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../loading';
 import { BsPenFill, BsTrash2Fill } from 'react-icons/bs';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Page = () => {
   const queryClient = useQueryClient();
@@ -110,8 +112,9 @@ const Page = () => {
                       </Link>
                       <button
                         className='btn btn-error'
-                        onClick={async () => {
-                          await mutation.mutateAsync(item.id);
+                        onClick={() => {
+                          mutation.mutate(item.id);
+                          toast.success('Berhasil menghapus barang');
                         }}>
                         <BsTrash2Fill className='text-white' />
                       </button>
@@ -122,6 +125,7 @@ const Page = () => {
           </table>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };

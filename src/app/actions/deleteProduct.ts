@@ -12,12 +12,26 @@ export async function deleteProduct(id: number) {
       foto: true,
     },
   });
+
   if (imagePath) {
     await removeImage(imagePath?.foto);
   }
-  await prisma.produk.delete({
-    where: {
-      id,
-    },
-  });
+
+  await prisma.$transaction([
+    prisma.produk.update({
+      where: {
+        id,
+      },
+      data: {
+        kategori: {
+          disconnect: [],
+        },
+      },
+    }),
+    prisma.produk.delete({
+      where: {
+        id,
+      },
+    }),
+  ]);
 }

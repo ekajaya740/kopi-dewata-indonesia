@@ -156,52 +156,55 @@ export default function Page() {
               <></>
             )}
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:p-0 p-3'>
-              {data && data.length !== 0
-                ? data.map((item) => (
-                    <ProdukCard
-                      key={item.id}
-                      produk={item}
-                      actions={
-                        <>
-                          {item.stok > 0 ? (
-                            <button
-                              className='btn btn-primary w-full'
-                              onClick={async () => {
-                                await addToKeranjang(item.id);
-                                router.refresh();
-                              }}>
-                              Tambah ke keranjang
-                            </button>
-                          ) : (
-                            <p>Produk habis</p>
-                          )}
-                        </>
-                      }
-                    />
-                  ))
-                : produk &&
-                  produk.map((item) => (
-                    <ProdukCard
-                      key={item.id}
-                      produk={item}
-                      actions={
-                        <>
-                          {item.stok > 0 ? (
-                            <button
-                              className='btn btn-primary w-full'
-                              onClick={async () => {
-                                await addToKeranjang(item.id);
-                                router.refresh();
-                              }}>
-                              Tambah ke keranjang
-                            </button>
-                          ) : (
-                            <p>Produk habis</p>
-                          )}
-                        </>
-                      }
-                    />
-                  ))}
+              {data && data.length !== 0 ? (
+                data.map((item) => (
+                  <ProdukCard
+                    key={item.id}
+                    produk={item}
+                    actions={
+                      <>
+                        {item.stok > 0 ? (
+                          <button
+                            className='btn btn-primary w-full'
+                            onClick={async () => {
+                              await addToKeranjang(item.id);
+                              router.refresh();
+                            }}>
+                            Tambah ke keranjang
+                          </button>
+                        ) : (
+                          <p>Produk habis</p>
+                        )}
+                      </>
+                    }
+                  />
+                ))
+              ) : produk && produk.length !== 0 ? (
+                produk.map((item) => (
+                  <ProdukCard
+                    key={item.id}
+                    produk={item}
+                    actions={
+                      <>
+                        {item.stok > 0 ? (
+                          <button
+                            className='btn btn-primary w-full'
+                            onClick={async () => {
+                              await addToKeranjang(item.id);
+                              router.refresh();
+                            }}>
+                            Tambah ke keranjang
+                          </button>
+                        ) : (
+                          <p>Produk habis</p>
+                        )}
+                      </>
+                    }
+                  />
+                ))
+              ) : (
+                <p>Tidak ada data</p>
+              )}
             </div>
           </div>
         )}
